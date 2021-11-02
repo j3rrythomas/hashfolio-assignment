@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Menu } from "antd";
 
-import BasketCard from "./BasketCard";
-import data from "../data";
+import Portfolios from "./Portfolios";
 
 const RecordsDiv = styled.div`
   margin: 5% 10%;
@@ -27,16 +26,13 @@ const RecordsMenu = styled(Menu)`
     color: #2c73d2 !important;
   }
 `;
+
 const Records = () => {
+  const [visibleItem, setVisibleItem] = useState("portfolios");
+
   const handleMenuSelect = (itemData) => {
     setVisibleItem(itemData.key);
   };
-  useEffect(() => {
-    setBasketsData(data.results);
-    console.log(basketsData);
-  }, []);
-  const [visibleItem, setVisibleItem] = useState("portfolios");
-  const [basketsData, setBasketsData] = useState([]);
   return (
     <RecordsDiv>
       <RecordsMenu
@@ -48,14 +44,7 @@ const Records = () => {
         <Menu.Item key="watchlist">Watchlist</Menu.Item>
       </RecordsMenu>
 
-      {visibleItem === "portfolios" ? (
-        basketsData.map((card, index) => {
-          const cardColor = index % 2 === 0 ? "#F7F7F7" : "#FFFFFF";
-          return <BasketCard color={cardColor} />;
-        })
-      ) : (
-        <>WatchList</>
-      )}
+      {visibleItem === "portfolios" ? <Portfolios /> : <></>}
     </RecordsDiv>
   );
 };
